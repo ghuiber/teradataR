@@ -4,8 +4,8 @@ timeToCharacter = function(df) {
   return (df)
 }
 
-R_to_TD = function(databasename, tablename, df) {
-  if(!tdExistsTable(databasename, tablename)) tdQueryUpdate(dbBuildTableDefinition(databasename, tablename, df))
+R_to_TD = function(databasename, tablename, df, primaryIndex=NULL, partitionDate=NULL) {
+  if(!tdExistsTable(databasename, tablename)) tdQueryUpdate(dbBuildTableDefinition(databasename, tablename, df, primaryIndex, partitionDate))
   tmp = tempfile()
   write.table(timeToCharacter(df), tmp, row.names=F, col.names=F, sep=",")
   tmp2 = readLines(tmp); tmp2 = gsub("\"", "'", tmp2); tmp2 = strsplit(tmp2, "\n")
@@ -17,6 +17,6 @@ R_to_TD = function(databasename, tablename, df) {
   return(sql)
 }
 
-tdWriteTable = function(databasename, tablename, df) {
-  tdQueryUpdate(R_to_TD(databasename, tablename, df))
+tdWriteTable = function(databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL) {
+  tdQueryUpdate(R_to_TD(databasename, tablename, df, primaryIndex, partitionDate))
 }
