@@ -2,10 +2,10 @@ Package: teradataR
 Type: Package
 Title: Teradata R Package
 Version: 1.0.2
-Date: 2010-10-11
-Author: Todd Brye
-Maintainer: <todd.brye@teradata.com>
+Date: 2013-09-16
+Author: Jeffrey Wong
+Maintainer: <jeffreyw@netflix.com>
 Depends: R (>= 2.11.0)
-Description: This package allows you you access a Teradata database using the R language.  It allows programmers familiar with R to analyze Teradata objects a lot like they would access a data frame object.  This version is the Netflix version based on TeradataR 1.0.1
+Description: This package allows you you access a Teradata database using the R language.  It allows programmers familiar with R to analyze Teradata objects a lot like they would access a data frame object.  This version is the Netflix version based on TeradataR 1.0.1, which allows you to write a dataframe to a table using BTEQ
 License: GPL (>= 2)
 LazyLoad: yes
