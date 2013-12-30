@@ -1,6 +1,6 @@
 timeToCharacter = function(df) {
   timeCols = unlist(lapply(df, function(i) return (data.class(i) == "POSIXct" | data.class(i) == "Date")))
-  df[,timeCols] = lapply(df[,timeCols,export=F], as.character)
+  df[,timeCols] = lapply(df[,timeCols,drop=F], as.character)
   return (df)
 }
 
