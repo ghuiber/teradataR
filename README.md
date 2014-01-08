@@ -3,10 +3,8 @@ teradataR
 
 mirror for R package to communicate with Teradata
 
-This package now contains adds on in addition to Teradata's release of TeradataR.  The version here allows the user
-to write an R data frame to Teradata, as one would see in RSQLite and RMySQL.  What is implemented here is only a work
-around, the main problem is that teradataR does not implement methods from DBI, which would allow a much more robust
-way of converting R data frames to SQL tables.
+This package contains add ons in addition to Teradata's release of TeradataR.  The version here allows the user
+to write an R data frame to Teradata, as one would see in RSQLite and RMySQL.
 
 Teradata JARs
 ---------
