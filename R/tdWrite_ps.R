@@ -36,7 +36,7 @@ tdInsertPS = function(ps, df) {
     print (i)
     r = df[i,]
     for (j in 1:ncol(df)) {
-      value = unlist(r[j])
+      value = unlist(r[,j])
       if (is.null(value) | is.na(value) | is.nan(value)) {
         .jcall(ps,"V","setNull",as.integer(j), java.typeint[j])
       }
