@@ -9,6 +9,7 @@ bteqWriteTable = function(server, databasename, tablename, numSessions=10, usern
 
   sql = sprintf("%s\n\n%s\n\n%s;", bteq.using, bteq.insert, bteq.values)
   bteq = sprintf(".SESSIONS %s
+                  .logmech ldap
                   LOGON %s/%s,%s;
                   .import vartext ',' file = '%s' skip = 1
                  .QUIET ON
