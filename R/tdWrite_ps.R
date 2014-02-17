@@ -51,7 +51,7 @@ tdInsertPS = function(ps, df) {
   return (ps)
 }
 
-tdWriteTable = function(databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL) {
+tdWriteTable_ps = function(databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL) {
   if(!tdExistsTable(databasename, tablename)) tdQueryUpdate(dbBuildTableDefinition(databasename, tablename, df, primaryIndex, partitionDate))
   .jcall(tdConnection@jc,"V","setAutoCommit",FALSE)
   ps = .jcall(tdConnection@jc,
