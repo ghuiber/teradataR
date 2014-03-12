@@ -19,7 +19,15 @@ R_to_TD = function(databasename, tablename, df, primaryIndex=NULL, partitionDate
   return(sql)
 }
 
-tdWriteTable = function(databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL) {
+tdWriteTable = function(databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL, verbose = T) {
   if (nrow(df) > 2000) warning("Attempting to upload a large data frame.  You may want to use tdWriteTable_ps or bteqWriteTable instead")
-  tdQueryUpdate(R_to_TD(databasename, tablename, df, primaryIndex, partitionDate))
+  numElements = length(df)
+  numBatches = ceiling(numElements / 20000)
+  rowsPerBatch = ceiling(20000 / ncol(df))
+  for (batch in numBatches) {
+    if (verbose) print(sprintf("Begin batch %s", batch))
+    row.start = (batch-1) * rowsPerBatch + 1
+    row.end = min(nrow(df), batch*rowsPerBatch)
+    tdQueryUpdate(R_to_TD(databasename, tablename, df[row.start : row.end, ], primaryIndex, partitionDate))
+  }
 }
