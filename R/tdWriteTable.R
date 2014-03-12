@@ -13,7 +13,7 @@ R_to_TD = function(databasename, tablename, df, primaryIndex=NULL, partitionDate
   sql = lapply(tmp2, function(d) {
     values = unlist(strsplit(d, ','))
     values[values == 'NA'] = "NULL"
-    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, tablename), paste(colnames(df), collapse=","), paste(values, collapse = ",")))
+    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, tablename), paste(colnames(df), collapse=","), paste(values, collapse = ","))
   })
   sql = paste(sql, collapse = ";")
   return(sql)
