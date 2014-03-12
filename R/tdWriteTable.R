@@ -11,7 +11,9 @@ R_to_TD = function(databasename, tablename, df, primaryIndex=NULL, partitionDate
   tmp2 = readLines(tmp); tmp2 = gsub("\"", "'", tmp2); tmp2 = strsplit(tmp2, "\n")
   unlink(tmp)
   sql = lapply(tmp2, function(d) {
-    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, tablename), paste(colnames(df), collapse=","), d)   
+    values = unlist(strsplit(d, ','))
+    values[values == 'NA'] = "NULL"
+    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, tablename), paste(colnames(df), collapse=","), paste(values, collapse = ",")))
   })
   sql = paste(sql, collapse = ";")
   return(sql)
