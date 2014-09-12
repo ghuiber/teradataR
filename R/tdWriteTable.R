@@ -4,18 +4,39 @@ timeToCharacter = function(df) {
   return (df)
 }
 
-R_to_TD = function(databasename, tablename, df, primaryIndex=NULL, partitionDate=NULL) {
-  if(!tdExistsTable(databasename, tablename)) tdQueryUpdate(dbBuildTableDefinition(databasename, tablename, df, primaryIndex, partitionDate))
-  tmp = tempfile()
-  write.table(timeToCharacter(df), tmp, row.names=F, col.names=F, sep=",")
-  tmp2 = readLines(tmp); tmp2 = gsub("\"", "'", tmp2); tmp2 = strsplit(tmp2, "\n")
-  unlink(tmp)
-  sql = lapply(tmp2, function(d) {
-    values = unlist(strsplit(d, ','))
-    values[values == 'NA'] = "NULL"
-    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, tablename), paste(colnames(df), collapse=","), paste(values, collapse = ","))
-  })
-  sql = paste(sql, collapse = ";")
+R_to_TD = function (databasename, tablename, df, primaryIndex = NULL, partitionDate = NULL) 
+{
+  if (!tdExistsTable(databasename, tablename)) 
+    tdQueryUpdate(dbBuildTableDefinition(databasename, tablename, 
+                                         df, primaryIndex, partitionDate))
+#   tmp = tempfile()
+#   write.table(timeToCharacter(df), tmp, row.names = F, col.names = F, 
+#               sep = ",")
+  
+#   tmp2 = readLines(tmp)
+#   tmp2 = gsub("\"", "'", tmp2)
+#   tmp2 = strsplit(tmp2, "\n")
+#   unlink(tmp)
+#   sql = lapply(tmp2, function(d) {
+#     values = unlist(strsplit(d, ","))
+#     values[values == "NA"] = "NULL"
+#     sprintf("insert into %s (%s) values (%s)", tdPath(databasename, 
+#                                                       tablename), paste(colnames(df), collapse = ","), 
+#             paste(values, collapse = ","))
+#   })
+#   sql = paste(sql, collapse = ";")
+#   return(sql)
+  
+  sql = paste(apply(df, 1, function(i) {
+    values = paste(lapply(i, function(ii) {
+      if (ii == 'NA' | is.na(ii) | is.null(ii)) sprintf("%s", 'NULL')
+      else if (is.numeric(ii)) sprintf("%s", ii)
+      else sprintf("'%s'", gsub("'", "", ii))
+    }), collapse=',')
+    sprintf("insert into %s (%s) values (%s)", tdPath(databasename, 
+                                                      tablename), paste(colnames(df), collapse = ","), 
+                                                      paste(values, collapse = ","))
+  }), collapse=';')
   return(sql)
 }
 
