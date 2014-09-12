@@ -15,6 +15,6 @@ FLOOR, INSTR, INTCAP, LENGTH, LPAD, LTRIM, NGRAM, OREPLACE,OTRANSLATE,
 RPAD, RTRIM, Ops.td.data.frame, Ops.td.expression, is.td.expression,
 GREATEST, LEAST, td.tapply, subset.td.data.frame, tdQueryUpdate,
 tdWriteTable, bteqWriteTable, dbBuildTableDefinition, tdWriteTable_ps,
-tdBigQuery)
+tdBigQuery, R_to_TD)
 S3method("[", td.data.frame)
 S3method("[<-", td.data.frame)
